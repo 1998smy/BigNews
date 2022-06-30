@@ -40,6 +40,20 @@
 .login_form{
     position: relative;
 }
+.login_form .icon-user{
+    position: absolute;
+    top: 7px;
+    left: 44px;
+    font-size: 16px;
+    color: #999;
+}
+.login_form .icon-key{
+    position: absolute;
+    top: 73px;
+    left: 44px;
+    font-size: 18px;
+    color: #999;
+}
 .input_txt,.input_password,.input_sub{
     display: block;
     margin: 27px auto 0;
