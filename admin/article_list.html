@@ -72,6 +72,61 @@
             </div>
         </div>
     </div>
+
+    <!-- 文章分类类别模板 -->
+    <script id="article_cat" type="text/html">
+        <option value="">所有分类</option>
+        {{ each data v }}
+        <option value="">{{ v.name }}</option>
+        {{ /each }}
+    </script>
+    <!-- 所有文章模板 -->
+    <script id="article_list" type="text/html">
+        {{ each data.data v }}
+        <tr>
+            <td>{{ v.title }}</td>
+            <td>{{ v.author }}</td>
+            <td>{{ v.category }}</td>
+            <td class="text-center">{{ v.date }}</td>
+            <td class="text-center">{{ v.state }}</td>
+            <td class="text-center">
+                <a href="article_edit.html" class="btn btn-default btn-xs">编辑</a>
+                <a href="javascript:void(0);" class="btn btn-danger btn-xs delete">删除</a>
+            </td>
+        </tr>
+        {{ /each }}
+    </script>
+    <script src="./libs/http.js"></script>
+    <script>
+        $(function () {
+            // 1.页面一加载，显示所有文章
+            $.ajax({
+                url: BigNew.article_query,
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    page: 1,
+                    perpage: 14
+                },
+                success: function (backData) {
+                    console.log(backData);
+                    // 数据响应后，渲染页面
+                    $('.table>tbody').html(template('article_list', backData));
+                }
+            });
+            // 1.查询所有文章类别
+            $.ajax({
+                url: BigNew.category_list,
+                type: 'get',
+                dataType: 'json',
+                success: function (backData) {
+                    console.log(backData);
+                    // 数据响应后，渲染页面
+                    $('#selCategory').html(template('article_cat', backData));
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

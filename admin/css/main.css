@@ -1,3 +1,8 @@
+/* login.html */
+body {
+    font-family: 'MicroSoft YaHei';
+    background-color: #f2f3f5;
+}
 .main_wrap{
     position: absolute;
     top: 0;
@@ -77,6 +82,8 @@
 .input_sub:hover{
     background-color: #08a0cc;
 }
+
+/* index.html */
 .sider{
     position: absolute;
     top: 0;
@@ -190,6 +197,16 @@
     right: 0;
     height: 65px;
     line-height: 65px;
+    background-color: #fff;
+}
+.header_bar .search_form{
+    float: left;
+    margin-left: 30px;
+    margin-top: 3px;
+    width:218px;
+    height:65px;
+    border:1px solid #ddd;
+    background-color: #f2f3f5;
 }
 .header_bar .user_center_link{
     float: right;
@@ -218,4 +235,56 @@
     bottom: 0;
     right: 0;
     background-color: #f2f3f5;
+}
+
+/* main.html */
+.common_title{
+    margin-top: 20px;
+    background-color: #fbfbfb;
+    border: 1px solid #e7e7e9;
+    font-size: 16px;
+    color: #333;
+    line-height: 50px;
+    text-indent: 15px;
+}
+.common_con{
+    padding-top: 25px;
+    border: 1px solid #e7e7e9;
+    border-top: 0;
+    background-color: #fff;
+}
+.form-group{
+    margin-bottom: 25px;
+}
+.form-group label{
+    font-size: 16px;
+    color: #666;
+    font-weight: normal;
+}
+.form-group input{
+    font-size: 16px;
+    color: #000;
+}
+.user_pic{
+    margin-bottom: 15px;
+    width: 120px;
+    height: 120px;
+}
+/* article_category.html */
+.mp20{
+    margin-top: 25px;
+}
+.common_con table th,
+.common_con table td,
+.common_con a{
+    font-size: 16px;
+}
+.common_con table td a{
+    font-size: 13px;
+}
+.form-inline select{
+    font-size: 15px;
+}
+.form-inline button{
+    font-size: 14px;
 }
