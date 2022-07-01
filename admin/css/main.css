@@ -152,6 +152,10 @@
     font-size: 19px;
     color: #adafb5;
     transform: rotate(90deg);
+    transition: all 500ms ease;
+}
+.level01 a .rotate0{
+    transform: rotate(0deg);
 }
 .level02{
     background-color: #242732;

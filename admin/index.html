@@ -41,7 +41,7 @@
                 </a>
             </div>
             <ul class="level02">
-                <li class="active"><a href="./article_list.html" target="myFrame">
+                <li><a href="./article_list.html" target="myFrame">
                         <i class="iconfont icon-arrow-right">&#xe75c</i>
                         <span>文章列表</span>
                     </a>
@@ -85,7 +85,7 @@
 
         <!-- 右侧主体内容 -->
         <div class="main" id="main_body">
-
+            <iframe src="./main_count.html" frameborder="0" name="myFrame" style="width: 100%;height: 100%;"></iframe>
         </div>
     </div>
 
@@ -123,6 +123,32 @@
                 // 2.2 跳转登录页
                 window.location.href = './login.html';
             });
+
+            // 侧边栏点击效果
+            // 3.1 一级菜单点击事件
+            $('.level01').click(function(){
+                // （1）排他思想修改样式
+                $(this).addClass('active').siblings().removeClass('active');
+                // （2）如果是文章管理，额外的下拉菜单和旋转动画
+                if ($(this).index() == 1) {
+                    // 下拉动画
+                    $('.level02').slideToggle();
+                    // 旋转动画
+                    $('.level01>a>.icon-arrow-down-l').toggleClass('rotate0');
+                    // 选中之后，默认选中第一个li元素：主动触发li元素的点击事件
+                    $('.level02>li:eq(0)>a')[0].click();
+                }else{
+                    // 如果点击的不是文章管理，二级菜单高亮取消
+                    $('.level02>li').removeClass('active');
+                }
+            });
+
+            // 3.2 二级菜单点击事件
+            $('.level02>li').click(function(){
+                // 排他思想改变样式
+                $(this).addClass('active').siblings().removeClass('active');
+            });
+
 
         });
     </script>
