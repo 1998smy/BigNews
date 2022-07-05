@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>大事件-列表页</title>
-    <link rel="stylesheet" type="text/css" href="css/reset.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="css/jquery.pagination.css">
+    <link rel="stylesheet" type="text/css" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
-    <script type="text/javascript" src="js/jquery.pagination.min.js"></script>
+    <!-- 分页插件导包 -->
+    <script src="./js/jquery.twbsPagination.js"></script>
 </head>
 
 <body>
@@ -57,8 +57,7 @@
     </div>
 
     <div class="main_con clearfix">
-        <div class="left_con setfr">
-
+        <div class="left_con setfr common_news">
             <div class="list_title">
                 <h3>科 技</h3>
             </div>
@@ -135,19 +134,10 @@
                 </div>
             </div>
 
-            <div id="pagination" class="page"></div>
-            <script>
-                $(function () {
-                    $("#pagination").pagination({
-                        currentPage: 2,
-                        totalPage: 8,
-                        callback: function (current) {
-                            alert('ok!');
-                        }
-                    });
-                });
-            </script>
-
+            <div id="pagination" class="page">
+                <!-- 分页HTML -->
+                <ul id="pagination" class="pagination-sm"></ul>
+            </div>
         </div>
         <div class="right_con setfl">
             <div class="common_wrap">
@@ -227,6 +217,200 @@
     </div>
     <!-- 导包template -->
     <script src="./js/template-web.js"></script>
+    <!-- 文章类型模板下拉 -->
+    <script id="article_list" type="text/html">
+        <li class="up"></li>
+        {{ each data v }}
+        <li><a href="./list.html" data-id="{{ v.id }}">{{ v.name }}</a></li>
+        {{ /each }}
+    </script>
+    <!-- 文章类型模板导航 -->
+    <script id="article_nav" type="text/html">
+        {{ each data v }}
+        <li><a href="./list.html" data-id="{{ v.id }}">{{ v.name }}</a></li>
+        {{ /each }}
+    </script>
+    <!-- 最热排行模板 -->
+    <script id="hot_list" type="text/html">
+        <li><span class="first">1</span><a href="#">{{ data[0].title }}</a></li>
+        <li><span class="second">2</span><a href="#">{{ data[1].title }}</a></li>
+        <li><span class="third">3</span><a href="#">{{ data[2].title }}</a></li>
+        <li><span>4</span><a href="#">{{ data[3].title }}</a></li>
+        <li><span>5</span><a href="#">{{ data[4].title }}</a></li>
+        <li><span>6</span><a href="#">{{ data[5].title }}</a></li>
+        <li><span>7</span><a href="#">{{ data[6].title }}</a></li>
+    </script>
+    <!-- 最新评论模板 -->
+    <script id="comments_list" type="text/html">
+            {{ each data v }}
+            <li>
+                <span>山</span>
+                <b><em>{{ v.author }}</em>{{ v.date }}</b>
+                <strong>{{ v.intro }}</strong>
+            </li>
+            {{ /each }}
+    </script>
+    <!-- 焦点关注模板 -->
+    <script id="focus_guanzhu" type="text/html">
+            {{ each data v }}
+            <li><a href="#">{{ v.intro }}</a></li>
+            {{ /each }}
+    </script>
+    <!-- 文章列表模板 -->
+    <script id="article_lists" type="text/html">
+        <!-- <div class="list_title">
+            <h3></h3>
+        </div> -->
+        {{ each data.data v }}
+        <div class="common_news_list">
+            <a href="#" class="list_pic"><img src="{{ v.cover }}" alt=""></a>
+            <h4><a href="#">{{ v.title }} </a></h4>
+            <p>{{ v.intro }}</p>
+            <div class="new_info">
+                <span>标签：{{ v.category }}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<i class="fa fa-eye"></i>&nbsp;阅读( {{ v.read }}
+                    )&nbsp;&nbsp;&nbsp;<i class="fa fa-commenting"></i>&nbsp;评论( {{ v.comments }} )</span>
+                <b>发布于 {{ v.date }}</b>
+            </div>
+        </div>
+        {{ /each }}
+
+    </script>
+
+
+    <script>
+        $(function () {
+            // 2.文章类型查询
+            $.ajax({
+                url: 'http://localhost:8080/api/v1/index/category',
+                type: 'get',
+                dataType: 'json',
+                success: function (backData) {
+                    console.log(backData);
+                    // 数据响应后，渲染页面
+                    $('.level_two').html(template('article_list', backData));
+                    $('.left_menu').html(template('article_nav', backData));
+                }
+            });
+
+            // 4.热门排行
+            $.ajax({
+                url: 'http://localhost:8080/api/v1/index/rank',
+                type: 'get',
+                dataType: 'json',
+                success: function (backData) {
+                    console.log(backData);
+                    // 数据响应后，渲染页面
+                    $('.content_list').html(template('hot_list', backData));
+                }
+            });
+
+            // 5.最新评论
+            $.ajax({
+                url: 'http://localhost:8080/api/v1/index/latest_comment',
+                type: 'get',
+                dataType: 'json',
+                success: function (backData) {
+                    console.log(backData);
+                    // 数据响应后，渲染页面
+                    $('.comment_list').html(template('comments_list', backData));
+                }
+            });
+
+            // 6.焦点关注
+            $.ajax({
+                url: 'http://localhost:8080/api/v1/index/attention',
+                type: 'get',
+                dataType: 'json',
+                success: function (backData) {
+                    console.log(backData);
+                    // 数据响应后，渲染页面
+                    $('.guanzhu_list').html(template('focus_guanzhu', backData));
+                }
+            });
+
+            // 7.文章类型点击事件
+            $('.level_two>li').on('click', 'a', function () {
+                // $.ajax({
+                //     url: 'http://localhost:8080/api/v1/index/attention',
+                //     type: 'get',
+                //     dataType: 'json',
+                //     success: function (backData) {
+                //         console.log(backData);
+                //         // 数据响应后，渲染页面
+                //         $('.guanzhu_list').html(template('focus_guanzhu', backData));
+                //     }
+                // });
+
+            });
+
+            // 1.页面一加载，查询所有评论
+            getArticleList(1, true);
+
+            // 2.分页插件
+            /**
+                 * @descrirption:加载分页插件
+                 * @param {type} 
+                 * @return:
+                 */
+
+            function loadPagenation(totalPage, startPage) {
+                // 1.先销毁旧的分页插件
+                $('#pagination').twbsPagination('destroy');
+                // 2.初始化分页插件数据
+                $('#pagination').twbsPagination({
+                    totalPages: totalPage,
+                    visiblePages: 7,
+                    startPage: startPage,
+                    first: '首页',
+                    prev: '上一页',
+                    next: '上一页',
+                    last: '尾页',
+                    onPageClick: function (event, page) {
+                        $('#page-content').text('Page ' + page);
+                        console.log(page);
+                        // 发送ajax请求对应页数的数据
+                        /* 方法一： */
+                        // if (startPage != page) {
+                        //     getArticleList(page);
+                        // };
+                        getArticleList(page);
+                    }
+                });
+            };
+
+            /**
+            * @descrirption:加载分页数据
+            * @param {type} currentPage :当前页数
+            * @return:
+            */
+
+            function getArticleList(currentPage, flag) {
+                // 1.查询文章列表
+                $.ajax({
+                    url: 'http://localhost:8080/api/v1/index/search',
+                    type: 'get',
+                    dataType: 'json',
+                    data: {
+                        type:window.location.href.split('=')[1],
+                        page: currentPage,
+                        perpage: 10
+                    },
+                    success: function (backData) {
+                        console.log(backData);
+                        // 数据响应后，渲染页面
+                        $('.common_news').html(template('article_lists', backData));
+                        /* 方法二： */
+                        if (flag) {
+                            // 加载分页插件
+                            // loadPagenation(backData.data.totalPage, currentPage);
+                        };
+                    }
+                });
+            }
+
+        });
+    </script>
+
 </body>
 
 </html>
