@@ -288,3 +288,9 @@ body {
 .form-inline button{
     font-size: 14px;
 }
+/* article_edit.html */
+.article_cover{
+    margin-bottom: 10px;
+    width: 200px;
+    height: 200px;
+}
