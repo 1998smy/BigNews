@@ -363,3 +363,45 @@ body {
     border:1px solid #e7e7e9;
     background-color: #fff!important;   
 }
+.menu_collapse:hover .level_two{
+    display:block;
+}
+.level_two .up{
+   height:6px;
+   background:url('../images/up.png') center center no-repeat;
+   border-bottom:0px;
+}
+.level_two{
+    position:absolute;
+    width:120px;
+    left:0;
+    top:50px;
+    overflow: hidden;
+    display:none;
+    z-index:999;
+}
+
+.level_two li{
+    background-color: #2a2a2a;
+    border-bottom:1px solid #505050;   
+    font-size:14px;
+    overflow: hidden;
+}
+.level_two li:nth-child(2){
+    border-top-left-radius:6px;
+    border-top-right-radius:6px;
+}
+.level_two li:last-child{
+    border-bottom-left-radius:6px;
+    border-bottom-right-radius:6px;
+}
+.level_two a{
+    display:block;
+    color:#fff;
+    line-height:40px;
+    text-indent:10px;
+}
+.level_two a:hover{
+    background-color:#0074f3;
+    text-decoration: none;
+}
